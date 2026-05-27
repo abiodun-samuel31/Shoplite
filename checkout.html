@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Checkout — ShopLite" />
+  <title>Checkout | ShopLite</title>
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    .checkout-page {
+      padding: 120px 0 80px;
+      min-height: 100vh;
+    }
+
+    .checkout-page-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .checkout-page-sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* Form */
+    .checkout-form-wrap {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .form-section {
+      padding: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-section:last-child {
+      border-bottom: none;
+    }
+
+    .form-section-title {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-section-title span {
+      width: 28px;
+      height: 28px;
+      background: var(--accent);
+      color: #0a0a0f;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .form-row.full {
+      grid-template-columns: 1fr;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 12px 16px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-family: var(--font-body);
+      transition: var(--transition);
+    }
+
+    .form-group input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(232,255,71,0.08);
+    }
+
+    .form-group select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238888a0' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    .input-error {
+      border-color: #ff4747 !important;
+    }
+
+    .auth-error,
+    .field-error {
+      font-size: 0.75rem;
+      color: #ff4747;
+      min-height: 16px;
+      margin-top: 2px;
+    }
+
+    /* Payment Options */
+    .payment-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .payment-option.active {
+      border-color: var(--accent);
+      background: rgba(232,255,71,0.04);
+    }
+
+    .payment-option:hover {
+      border-color: rgba(232,255,71,0.3);
+    }
+
+    .payment-radio {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      flex-shrink: 0;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .payment-option.active .payment-radio {
+      border-color: var(--accent);
+      background: var(--accent);
+    }
+
+    .payment-option.active .payment-radio::after {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #0a0a0f;
+      border-radius: 50%;
+    }
+
+    .payment-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .payment-info strong {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .payment-info p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Place order button */
+    .place-order-wrap {
+      padding: 24px 28px;
+    }
+
+    .place-order-btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent);
+      color: #0a0a0f;
+      border: none;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: var(--font-head);
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.02em;
+    }
+
+    .place-order-btn:hover {
+      background: #d4eb2a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,255,71,0.25);
+    }
+
+    .place-order-btn:active {
+      transform: scale(0.98);
+    }
+
+    .secure-note {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 12px;
+    }
+
+    /* Summary */
+    .checkout-summary-box {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: sticky;
+      top: 100px;
+    }
+
+    .checkout-summary-box h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .checkout-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .checkout-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .checkout-item-emoji {
+      width: 44px;
+      height: 44px;
+      background: var(--bg-3);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .checkout-item-info {
+      flex: 1;
+    }
+
+    .checkout-item-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .checkout-item-qty {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .checkout-item-price {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .checkout-summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .checkout-summary-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
+
+    .checkout-summary-line.total-line {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .checkout-summary-line.total-line span:last-child {
+      color: var(--accent);
+    }
+
+    .checkout-trust {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .checkout-trust span {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    /* Order success */
+    .order-success {
+      text-align: center;
+      padding: 60px 20px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .success-icon {
+      font-size: 5rem;
+      margin-bottom: 20px;
+      animation: bounce 1s ease;
+    }
+
+    .order-success h2 {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .order-success > p {
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+
+    .success-order-id {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      font-family: monospace;
+    }
+
+    .success-order-id strong {
+      color: var(--accent);
+    }
+
+    .success-summary {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .success-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .success-line:last-child {
+      border-bottom: none;
+    }
+
+    .success-line span:last-child {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .status-badge {
+      padding: 4px 12px;
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.2);
+      border-radius: 50px;
+      font-size: 0.78rem;
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    .success-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-16px); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .checkout-page {
+        padding: 100px 0 60px;
+      }
+
+      .checkout-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .checkout-summary-box {
+        position: static;
+        order: -1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-section {
+        padding: 20px 16px;
+      }
+
+      .place-order-wrap {
+        padding: 16px;
+      }
+
+      .success-actions {
+        flex-direction: column;
+      }
+
+      .success-actions .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="login.html">Account</a></li>
+        <li><a href="cart.html" class="nav-cart">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CHECKOUT PAGE -->
+  <main class="checkout-page">
+    <div class="container">
+
+      <div class="section-label fade-up">Almost There</div>
+      <h1 class="checkout-page-title fade-up">Checkout</h1>
+      <p class="checkout-page-sub fade-up">Fill in your details to complete your order.</p>
+
+      <div id="checkoutPage">
+        <div class="checkout-grid">
+
+          <!-- Form -->
+          <div class="checkout-form-wrap fade-up">
+
+            <!-- Contact Info -->
+            <div class="form-section">
+              <h3 class="form-section-title">
+                <span>1</span> Contact Information
+              </h3>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>First Name</label>
+                  <input type="text" id="firstName" placeholder="Abiodun" />
+                  <span class="field-error" id="firstNameError"></span>
+                </div>
+                <div class="form-group">
+                  <label>Last Name</label>
+                  <input type="text" id="lastName" placeholder="Samuel" />
+                  <span class="field-error" id="lastNameError"></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" id="email" placeholder="you@email.com" />
+                  <span class="field-error" id="emailError"></span>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number</label>
+                  <input type="tel" id="phone" placeholder="08012345678" />
+                  <span class="field-error" id="phoneError"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Delivery Address -->
+            <div class="form-section">
+              <h3 class="form-section-title">
+                <span>2</span> Delivery Address
+              </h3>
+              <div class="form-row full">
+                <div class="form-group">
+                  <label>Street Address</label>
+                  <input type="text" id="address" placeholder="12 Broad Street, Ikeja" />
+                  <span class="field-error" id="addressError"></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label>City</label>
+                  <input type="text" id="city" placeholder="Lagos" />
+                  <span class="field-error" id="cityError"></span>
+                </div>
+                <div class="form-group">
+                  <label>State</label>
+                  <select id="state">
+                    <option value="">Select State</option>
+                    <option>Abia</option>
+                    <option>Adamawa</option>
+                    <option>Akwa Ibom</option>
+                    <option>Anambra</option>
+                    <option>Bauchi</option>
+                    <option>Bayelsa</option>
+                    <option>Benue</option>
+                    <option>Borno</option>
+                    <option>Cross River</option>
+                    <option>Delta</option>
+                    <option>Ebonyi</option>
+                    <option>Edo</option>
+                    <option>Ekiti</option>
+                    <option>Enugu</option>
+                    <option>FCT Abuja</option>
+                    <option>Gombe</option>
+                    <option>Imo</option>
+                    <option>Jigawa</option>
+                    <option>Kaduna</option>
+                    <option>Kano</option>
+                    <option>Katsina</option>
+                    <option>Kebbi</option>
+                    <option>Kogi</option>
+                    <option>Kwara</option>
+                    <option selected>Lagos</option>
+                    <option>Nasarawa</option>
+                    <option>Niger</option>
+                    <option>Ogun</option>
+                    <option>Ondo</option>
+                    <option>Osun</option>
+                    <option>Oyo</option>
+                    <option>Plateau</option>
+                    <option>Rivers</option>
+                    <option>Sokoto</option>
+                    <option>Taraba</option>
+                    <option>Yobe</option>
+                    <option>Zamfara</option>
+                  </select>
+                  <span class="field-error" id="stateError"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="form-section">
+              <h3 class="form-section-title">
+                <span>3</span> Payment Method
+              </h3>
+              <div class="payment-options">
+                <div class="payment-option active" id="payment_delivery" onclick="selectPayment('delivery')">
+                  <div class="payment-radio"></div>
+                  <div class="payment-icon">🚚</div>
+                  <div class="payment-info">
+                    <strong>Pay on Delivery</strong>
+                    <p>Cash payment when your order arrives</p>
+                  </div>
+                </div>
+                <div class="payment-option" id="payment_transfer" onclick="selectPayment('transfer')">
+                  <div class="payment-radio"></div>
+                  <div class="payment-icon">🏦</div>
+                  <div class="payment-info">
+                    <strong>Bank Transfer</strong>
+                    <p>Transfer to our account before delivery</p>
+                  </div>
+                </div>
+                <div class="payment-option" id="payment_card" onclick="selectPayment('card')">
+                  <div class="payment-radio"></div>
+                  <div class="payment-icon">💳</div>
+                  <div class="payment-info">
+                    <strong>Debit/Credit Card</strong>
+                    <p>Secure card payment via Paystack</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Place Order -->
+            <div class="place-order-wrap">
+              <button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()">
+                Place Order
+              </button>
+              <p class="secure-note">🔒 Your information is secure and encrypted</p>
+            </div>
+
+          </div>
+
+          <!-- Order Summary -->
+          <div id="checkoutSummary"></div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+          <p>Your one-stop lifestyle store for clothing, accessories and gadgets.</p>
+          <div class="footer-socials">
+            <a href="#" title="Instagram">📸</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="WhatsApp">💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?category=clothing">Clothing</a></li>
+            <li><a href="shop.html?category=accessories">Accessories</a></li>
+            <li><a href="shop.html?category=gadgets">Gadgets</a></li>
+            <li><a href="shop.html?category=footwear">Footwear</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="login.html?mode=signup">Sign Up</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+            <li><a href="cart.html">My Cart</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 ShopLite. All rights reserved.</p>
+        <p>Built by <a href="../index.html">Abiodun Samuel</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/checkout.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your shopping cart — ShopLite" />
+  <title>Cart | ShopLite</title>
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    .cart-page {
+      padding: 120px 0 80px;
+      min-height: 100vh;
+    }
+
+    .cart-page-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .cart-page-sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 40px;
+    }
+
+    .cart-grid {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* Cart Items */
+    .cart-items-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .cart-items-header {
+      display: grid;
+      grid-template-columns: 1fr 140px 100px 40px;
+      gap: 16px;
+      padding: 16px 24px;
+      background: var(--bg-3);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .cart-item {
+      display: grid;
+      grid-template-columns: 1fr 140px 100px 40px;
+      gap: 16px;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+
+    .cart-item:hover {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .cart-item-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .cart-item-img {
+      width: 64px;
+      height: 64px;
+      background: var(--bg-3);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .cart-item-placeholder {
+      font-size: 1.8rem;
+    }
+
+    .cart-item-name {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .cart-item-price {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .cart-item-qty {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      width: fit-content;
+    }
+
+    .qty-btn {
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font-body);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qty-btn:hover {
+      background: var(--accent);
+      color: #0a0a0f;
+    }
+
+    .qty-value {
+      width: 40px;
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      line-height: 36px;
+    }
+
+    .cart-item-total {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .cart-item-remove {
+      width: 32px;
+      height: 32px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--text-dim);
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-item-remove:hover {
+      background: rgba(255,71,71,0.1);
+      border-color: #ff4747;
+      color: #ff4747;
+    }
+
+    /* Empty Cart */
+    .cart-empty {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .cart-empty-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .cart-empty h3 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .cart-empty p {
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    /* Summary Box */
+    .summary-box {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: sticky;
+      top: 100px;
+    }
+
+    .summary-box h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .total-line {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-top: 4px;
+    }
+
+    .total-line span:last-child {
+      color: var(--accent);
+    }
+
+    .free-ship {
+      color: var(--accent-green);
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .shipping-note {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      padding: 8px 12px;
+      background: var(--bg-3);
+      border-radius: var(--radius-xs);
+    }
+
+    .shipping-note.free {
+      color: var(--accent-green);
+    }
+
+    .summary-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .full-width {
+      width: 100%;
+      justify-content: center;
+      display: flex;
+    }
+
+    .summary-trust {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .summary-trust span {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    /* Clear cart button */
+    .cart-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 16px;
+    }
+
+    .clear-cart-btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .clear-cart-btn:hover {
+      border-color: #ff4747;
+      color: #ff4747;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .cart-page {
+        padding: 100px 0 60px;
+      }
+
+      .cart-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .cart-items-header {
+        display: none;
+      }
+
+      .cart-item {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .cart-item-left {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .cart-item-qty {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .cart-item-total {
+        grid-column: 2;
+        grid-row: 1;
+        text-align: right;
+      }
+
+      .cart-item-remove {
+        grid-column: 2;
+        grid-row: 2;
+        justify-self: end;
+      }
+
+      .summary-box {
+        position: static;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .cart-item-img {
+        width: 52px;
+        height: 52px;
+        font-size: 1.4rem;
+      }
+
+      .cart-item-name {
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="login.html">Account</a></li>
+        <li><a href="cart.html" class="nav-cart active">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- CART PAGE -->
+  <main class="cart-page">
+    <div class="container">
+
+      <div class="section-label fade-up">Your Bag</div>
+      <h1 class="cart-page-title fade-up">Shopping Cart</h1>
+      <p class="cart-page-sub fade-up">Review your items before checkout.</p>
+
+      <div class="cart-actions fade-up">
+        <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+      </div>
+
+      <div class="cart-grid">
+
+        <!-- Cart Items -->
+        <div>
+          <div class="cart-items-wrap">
+            <div class="cart-items-header">
+              <span>Product</span>
+              <span>Quantity</span>
+              <span>Total</span>
+              <span></span>
+            </div>
+            <div id="cartItems"></div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div id="cartSummary"></div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+          <p>Your one-stop lifestyle store for clothing, accessories and gadgets.</p>
+          <div class="footer-socials">
+            <a href="#" title="Instagram">📸</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="WhatsApp">💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?category=clothing">Clothing</a></li>
+            <li><a href="shop.html?category=accessories">Accessories</a></li>
+            <li><a href="shop.html?category=gadgets">Gadgets</a></li>
+            <li><a href="shop.html?category=footwear">Footwear</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="login.html?mode=signup">Sign Up</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+            <li><a href="cart.html">My Cart</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 ShopLite. All rights reserved.</p>
+        <p>Built by <a href="../index.html">Abiodun Samuel</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+
+</body>
+</html>

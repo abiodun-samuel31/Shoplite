@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Shop all products on ShopLite — clothing, accessories, gadgets and footwear." />
+  <title>Shop | ShopLite</title>
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    /* ---- SHOP PAGE SPECIFIC ---- */
+    .shop-hero {
+      padding: 140px 0 60px;
+      background: var(--bg-2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .shop-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .shop-hero p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .shop-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .shop-toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-wrap {
+      position: relative;
+    }
+
+    .search-wrap input {
+      padding: 10px 16px 10px 40px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text);
+      font-size: 0.88rem;
+      width: 220px;
+      transition: var(--transition);
+    }
+
+    .search-wrap input:focus {
+      border-color: var(--accent);
+      outline: none;
+      width: 260px;
+    }
+
+    .search-wrap input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      pointer-events: none;
+    }
+
+    .sort-select {
+      padding: 10px 16px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text);
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font-body);
+    }
+
+    .sort-select:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .product-count {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0a0a0f;
+      font-weight: 700;
+    }
+
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .no-results-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+    }
+
+    .no-results h3 {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .no-results p {
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .shop-main {
+      padding: 0 0 80px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+        <li><a href="login.html">Account</a></li>
+        <li><a href="cart.html" class="nav-cart">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- SHOP HERO -->
+  <div class="shop-hero">
+    <div class="container">
+      <div class="section-label">Our Collection</div>
+      <h1>All Products</h1>
+      <p>Browse our full range of clothing, accessories, gadgets and footwear.</p>
+    </div>
+  </div>
+
+  <!-- SHOP MAIN -->
+  <main class="shop-main">
+    <div class="container">
+
+      <!-- TOOLBAR -->
+      <div class="shop-toolbar">
+        <div class="shop-toolbar-left">
+          <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search products..."
+            />
+          </div>
+          <select class="sort-select" id="sortSelect">
+            <option value="default">Sort By: Default</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="name">Name: A to Z</option>
+          </select>
+        </div>
+        <span class="product-count" id="productCount"></span>
+      </div>
+
+      <!-- FILTER BUTTONS -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-category="all" onclick="filterByCategory('all')">All</button>
+        <button class="filter-btn" data-category="clothing" onclick="filterByCategory('clothing')">👕 Clothing</button>
+        <button class="filter-btn" data-category="accessories" onclick="filterByCategory('accessories')">👜 Accessories</button>
+        <button class="filter-btn" data-category="gadgets" onclick="filterByCategory('gadgets')">📱 Gadgets</button>
+        <button class="filter-btn" data-category="footwear" onclick="filterByCategory('footwear')">👟 Footwear</button>
+      </div>
+
+      <!-- PRODUCTS GRID -->
+      <div class="products-grid" id="shopGrid"></div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+          <p>Your one-stop lifestyle store for clothing, accessories and gadgets.</p>
+          <div class="footer-socials">
+            <a href="#" title="Instagram">📸</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="WhatsApp">💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?category=clothing">Clothing</a></li>
+            <li><a href="shop.html?category=accessories">Accessories</a></li>
+            <li><a href="shop.html?category=gadgets">Gadgets</a></li>
+            <li><a href="shop.html?category=footwear">Footwear</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="login.html?mode=signup">Sign Up</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+            <li><a href="cart.html">My Cart</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 ShopLite. All rights reserved.</p>
+        <p>Built by <a href="../index.html">Abiodun Samuel</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/shop.js"></script>
+
+</body>
+</html>

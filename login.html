@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Login or create an account — ShopLite" />
+  <title>Account | ShopLite</title>
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+
+    .auth-blob-1 {
+      width: 400px;
+      height: 400px;
+      background: var(--accent-2);
+      top: -100px;
+      right: -100px;
+      opacity: 0.2;
+    }
+
+    .auth-blob-2 {
+      width: 300px;
+      height: 300px;
+      background: var(--accent);
+      bottom: -80px;
+      left: -80px;
+      opacity: 0.06;
+    }
+
+    .auth-wrap {
+      width: 100%;
+      max-width: 480px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .auth-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .auth-logo a {
+      font-family: var(--font-head);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .auth-logo a span {
+      color: var(--accent);
+    }
+
+    /* Tabs */
+    .auth-tabs {
+      display: flex;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 4px;
+      margin-bottom: 28px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+      font-family: var(--font-body);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .auth-tab.active {
+      background: var(--accent);
+      color: #0a0a0f;
+    }
+
+    /* Card */
+    .auth-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+    }
+
+    .auth-card-title {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .auth-card-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    /* Form */
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .auth-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .auth-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .auth-field label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .auth-input {
+      padding: 13px 16px;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-family: var(--font-body);
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .auth-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .auth-input:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(232,255,71,0.08);
+    }
+
+    .auth-input.input-error {
+      border-color: #ff4747;
+    }
+
+    .auth-error {
+      font-size: 0.75rem;
+      color: #ff4747;
+      min-height: 16px;
+    }
+
+    /* Password wrap */
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap .auth-input {
+      padding-right: 48px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px;
+      transition: var(--transition);
+    }
+
+    .toggle-password:hover {
+      color: var(--text);
+    }
+
+    /* Forgot password */
+    .forgot-wrap {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .forgot-link {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      transition: var(--transition);
+    }
+
+    .forgot-link:hover {
+      color: var(--accent);
+    }
+
+    /* Submit button */
+    .auth-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent);
+      color: #0a0a0f;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: var(--font-head);
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 4px;
+    }
+
+    .auth-submit:hover {
+      background: #d4eb2a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,255,71,0.25);
+    }
+
+    .auth-submit:active {
+      transform: scale(0.98);
+    }
+
+    /* Divider */
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 4px 0;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .auth-divider span {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    /* Switch link */
+    .auth-switch {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 20px;
+    }
+
+    .auth-switch button {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-family: var(--font-body);
+      transition: var(--transition);
+    }
+
+    .auth-switch button:hover {
+      text-decoration: underline;
+    }
+
+    /* Terms */
+    .terms-note {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .terms-note a {
+      color: var(--accent);
+    }
+
+    /* Back to shop */
+    .back-to-shop {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-to-shop a {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .back-to-shop a:hover {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 24px 20px;
+      }
+
+      .auth-form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="login.html" class="active">Account</a></li>
+        <li><a href="cart.html" class="nav-cart">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- AUTH PAGE -->
+  <main class="auth-page">
+    <div class="auth-blob auth-blob-1"></div>
+    <div class="auth-blob auth-blob-2"></div>
+
+    <div class="auth-wrap fade-up">
+
+      <!-- Logo -->
+      <div class="auth-logo">
+        <a href="index.html">Shop<span>Lite</span></a>
+      </div>
+
+      <!-- Tabs -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" onclick="switchTab('login')">
+          Login
+        </button>
+        <button class="auth-tab" id="signupTab" onclick="switchTab('signup')">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Card -->
+      <div class="auth-card">
+
+        <!-- LOGIN FORM -->
+        <div id="loginForm">
+          <h2 class="auth-card-title">Welcome back 👋</h2>
+          <p class="auth-card-sub">Login to your ShopLite account to continue.</p>
+
+          <div class="auth-form">
+            <div class="auth-field">
+              <label>Email Address</label>
+              <input
+                type="email"
+                id="loginEmail"
+                class="auth-input"
+                placeholder="you@email.com"
+              />
+              <span class="auth-error" id="loginEmailError"></span>
+            </div>
+
+            <div class="auth-field">
+              <label>Password</label>
+              <div class="password-wrap">
+                <input
+                  type="password"
+                  id="loginPassword"
+                  class="auth-input"
+                  placeholder="Enter your password"
+                />
+                <button class="toggle-password" onclick="togglePasswordVisibility('loginPassword', this)" type="button">👁</button>
+              </div>
+              <span class="auth-error" id="loginPasswordError"></span>
+            </div>
+
+            <div class="forgot-wrap">
+              <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button class="auth-submit" onclick="loginUser()">
+              Login to Account
+            </button>
+          </div>
+        </div>
+
+        <!-- SIGNUP FORM -->
+        <div id="signupForm" style="display:none;">
+          <h2 class="auth-card-title">Create your account ✨</h2>
+          <p class="auth-card-sub">Join ShopLite and start shopping smarter.</p>
+
+          <div class="auth-form">
+            <div class="auth-form-row">
+              <div class="auth-field">
+                <label>First Name</label>
+                <input
+                  type="text"
+                  id="signupFirstName"
+                  class="auth-input"
+                  placeholder="Abiodun"
+                />
+                <span class="auth-error" id="signupFirstNameError"></span>
+              </div>
+              <div class="auth-field">
+                <label>Last Name</label>
+                <input
+                  type="text"
+                  id="signupLastName"
+                  class="auth-input"
+                  placeholder="Samuel"
+                />
+                <span class="auth-error" id="signupLastNameError"></span>
+              </div>
+            </div>
+
+            <div class="auth-field">
+              <label>Email Address</label>
+              <input
+                type="email"
+                id="signupEmail"
+                class="auth-input"
+                placeholder="you@email.com"
+              />
+              <span class="auth-error" id="signupEmailError"></span>
+            </div>
+
+            <div class="auth-field">
+              <label>Password</label>
+              <div class="password-wrap">
+                <input
+                  type="password"
+                  id="signupPassword"
+                  class="auth-input"
+                  placeholder="At least 6 characters"
+                />
+                <button class="toggle-password" onclick="togglePasswordVisibility('signupPassword', this)" type="button">👁</button>
+              </div>
+              <span class="auth-error" id="signupPasswordError"></span>
+            </div>
+
+            <div class="auth-field">
+              <label>Confirm Password</label>
+              <div class="password-wrap">
+                <input
+                  type="password"
+                  id="signupConfirm"
+                  class="auth-input"
+                  placeholder="Repeat your password"
+                />
+                <button class="toggle-password" onclick="togglePasswordVisibility('signupConfirm', this)" type="button">👁</button>
+              </div>
+              <span class="auth-error" id="signupConfirmError"></span>
+            </div>
+
+            <button class="auth-submit" onclick="signupUser()">
+              Create Account
+            </button>
+
+            <p class="terms-note">
+              By creating an account you agree to our
+              <a href="#">Terms of Service</a> and
+              <a href="#">Privacy Policy</a>.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Switch tab link -->
+      <div class="auth-switch">
+        <span id="switchText">Don't have an account?</span>
+        <button onclick="switchTab('signup')" id="switchBtn">Sign Up Free</button>
+      </div>
+
+      <!-- Back to shop -->
+      <div class="back-to-shop">
+        <a href="shop.html">← Continue Shopping</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Toggle password visibility
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🙈';
+      } else {
+        input.type = 'password';
+        btn.textContent = '👁';
+      }
+    }
+
+    // Update switch text when tab changes
+    const originalSwitchTab = switchTab;
+    function switchTab(tab) {
+      originalSwitchTab(tab);
+      const switchText = document.getElementById('switchText');
+      const switchBtn = document.getElementById('switchBtn');
+      if (tab === 'login') {
+        switchText.textContent = "Don't have an account?";
+        switchBtn.textContent = 'Sign Up Free';
+        switchBtn.onclick = () => switchTab('signup');
+      } else {
+        switchText.textContent = 'Already have an account?';
+        switchBtn.textContent = 'Login';
+        switchBtn.onclick = () => switchTab('login');
+      }
+    }
+  </script>
+
+</body>
+</html>

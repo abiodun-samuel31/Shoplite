@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Product details — ShopLite" />
+  <title>Product | ShopLite</title>
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    .product-page {
+      padding: 120px 0 80px;
+      min-height: 100vh;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--text-muted);
+      transition: var(--transition);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .breadcrumb span {
+      color: var(--text-dim);
+    }
+
+    /* Detail Grid */
+    .product-detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+      margin-bottom: 80px;
+    }
+
+    /* Image */
+    .detail-img-wrap {
+      position: sticky;
+      top: 100px;
+    }
+
+    .detail-img-main {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+
+    .detail-img-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .discount-tag {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #ff4747;
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .detail-img-thumbs {
+      display: flex;
+      gap: 12px;
+    }
+
+    .thumb {
+      width: 72px;
+      height: 72px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .thumb.active,
+    .thumb:hover {
+      border-color: var(--accent);
+    }
+
+    /* Info */
+    .detail-category {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .detail-name {
+      font-family: var(--font-head);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .detail-price-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .detail-price {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .detail-old-price {
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      text-decoration: line-through;
+    }
+
+    .detail-discount {
+      padding: 4px 10px;
+      background: rgba(255,71,71,0.1);
+      border: 1px solid rgba(255,71,71,0.2);
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #ff4747;
+    }
+
+    .detail-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Options */
+    .detail-option {
+      margin-bottom: 24px;
+    }
+
+    .detail-option label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .option-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .option-btn {
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .option-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .option-btn.active {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #0a0a0f;
+      font-weight: 700;
+    }
+
+    /* Quantity */
+    .detail-qty {
+      margin-bottom: 28px;
+    }
+
+    .detail-qty label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .qty-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .qty-btn {
+      width: 42px;
+      height: 42px;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: var(--font-body);
+    }
+
+    .qty-btn:hover {
+      background: var(--accent);
+      color: #0a0a0f;
+    }
+
+    .qty-value {
+      width: 48px;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      line-height: 42px;
+    }
+
+    /* Actions */
+    .detail-actions {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .detail-cart-btn {
+      flex: 1;
+      justify-content: center;
+      min-width: 160px;
+    }
+
+    .detail-wish-btn {
+      min-width: 130px;
+      justify-content: center;
+    }
+
+    /* Meta */
+    .detail-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Related */
+    .related-section {
+      padding-top: 60px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Not found */
+    .product-not-found {
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .not-found-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .product-not-found h3 {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+    }
+
+    .product-not-found p {
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .product-detail-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+
+      .detail-img-wrap {
+        position: static;
+      }
+
+      .detail-img-main {
+        font-size: 5rem;
+      }
+
+      .detail-actions {
+        flex-direction: column;
+      }
+
+      .detail-cart-btn,
+      .detail-wish-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-page {
+        padding: 100px 0 60px;
+      }
+
+      .detail-img-main {
+        font-size: 4rem;
+      }
+
+      .detail-price {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="login.html">Account</a></li>
+        <li><a href="cart.html" class="nav-cart">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PRODUCT PAGE -->
+  <main class="product-page">
+    <div class="container">
+
+      <!-- BREADCRUMB -->
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>›</span>
+        <a href="shop.html">Shop</a>
+        <span>›</span>
+        <span id="breadcrumbName">Product</span>
+      </div>
+
+      <!-- PRODUCT DETAIL (rendered by JS) -->
+      <div id="productDetail"></div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+          <p>Your one-stop lifestyle store for clothing, accessories and gadgets.</p>
+          <div class="footer-socials">
+            <a href="#" title="Instagram">📸</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="WhatsApp">💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?category=clothing">Clothing</a></li>
+            <li><a href="shop.html?category=accessories">Accessories</a></li>
+            <li><a href="shop.html?category=gadgets">Gadgets</a></li>
+            <li><a href="shop.html?category=footwear">Footwear</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="login.html?mode=signup">Sign Up</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+            <li><a href="cart.html">My Cart</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 ShopLite. All rights reserved.</p>
+        <p>Built by <a href="../index.html">Abiodun Samuel</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/shop.js"></script>
+  <script src="js/product.js"></script>
+  <script>
+    // Update breadcrumb name from URL
+    window.addEventListener('load', () => {
+      const id = new URLSearchParams(window.location.search).get('id');
+      const product = getProductById(id);
+      const breadcrumb = document.getElementById('breadcrumbName');
+      if (product && breadcrumb) {
+        breadcrumb.textContent = product.name;
+        document.title = product.name + ' | ShopLite';
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ShopLite — Your one-stop lifestyle store for clothing, accessories and gadgets in Nigeria." />
+  <title>ShopLite | Shop Smart, Live Better</title>
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="login.html">Account</a></li>
+        <li><a href="cart.html" class="nav-cart">
+          Cart
+          <span class="cart-count" id="cartCount">0</span>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+    <div class="hero-inner">
+      <div class="hero-text fade-up">
+        <p class="hero-tag">New arrivals just dropped 🔥</p>
+        <h1 class="hero-title">
+          Shop Smart,<br />
+          <span class="hero-title-accent">Live Better.</span>
+        </h1>
+        <p class="hero-sub">Discover the latest in clothing, accessories, and gadgets. Delivered fast. Priced right. Made for you.</p>
+        <div class="hero-actions">
+          <a href="shop.html" class="btn btn-primary">Shop Now</a>
+          <a href="#categories" class="btn btn-ghost">Browse Categories</a>
+        </div>
+        <div class="hero-trust">
+          <div class="trust-item">
+            <span>🚚</span> Free delivery over ₦10,000
+          </div>
+          <div class="trust-item">
+            <span>🔄</span> Easy returns
+          </div>
+          <div class="trust-item">
+            <span>🔒</span> Secure checkout
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual fade-up delay-2">
+        <div class="hero-card-stack">
+          <div class="hero-product-card card-back">
+            <div class="hpc-img"></div>
+            <div class="hpc-info">
+              <span class="hpc-name">Urban Sneakers</span>
+              <span class="hpc-price">₦12,500</span>
+            </div>
+          </div>
+          <div class="hero-product-card card-front">
+            <div class="hpc-img featured"></div>
+            <div class="hpc-badge">Best Seller</div>
+            <div class="hpc-info">
+              <span class="hpc-name">Classic Hoodie</span>
+              <span class="hpc-price">₦8,000</span>
+            </div>
+            <button class="hpc-btn">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MARQUEE STRIP ========== -->
+  <div class="marquee-strip">
+    <div class="marquee-track">
+      <span>Free Delivery Over ₦10,000</span>
+      <span>•</span>
+      <span>New Arrivals Every Week</span>
+      <span>•</span>
+      <span>100% Authentic Products</span>
+      <span>•</span>
+      <span>Easy Returns & Refunds</span>
+      <span>•</span>
+      <span>Secure Checkout</span>
+      <span>•</span>
+      <span>Free Delivery Over ₦10,000</span>
+      <span>•</span>
+      <span>New Arrivals Every Week</span>
+      <span>•</span>
+      <span>100% Authentic Products</span>
+      <span>•</span>
+      <span>Easy Returns & Refunds</span>
+      <span>•</span>
+      <span>Secure Checkout</span>
+      <span>•</span>
+    </div>
+  </div>
+
+  <!-- ========== CATEGORIES ========== -->
+  <section class="categories section" id="categories">
+    <div class="container">
+      <div class="section-label fade-up">Browse By</div>
+      <h2 class="section-title fade-up">Shop Categories</h2>
+      <div class="categories-grid fade-up delay-1">
+
+        <a href="shop.html?category=clothing" class="category-card">
+          <div class="cat-icon">👕</div>
+          <h3>Clothing</h3>
+          <p>Tops, bottoms, outfits &amp; more</p>
+          <span class="cat-arrow">→</span>
+        </a>
+
+        <a href="shop.html?category=accessories" class="category-card">
+          <div class="cat-icon">👟</div>
+          <h3>Accessories</h3>
+          <p>Bags, belts, caps &amp; jewellery</p>
+          <span class="cat-arrow">→</span>
+        </a>
+
+        <a href="shop.html?category=gadgets" class="category-card">
+          <div class="cat-icon">📱</div>
+          <h3>Gadgets</h3>
+          <p>Earphones, chargers &amp; tech</p>
+          <span class="cat-arrow">→</span>
+        </a>
+
+        <a href="shop.html?category=footwear" class="category-card">
+          <div class="cat-icon">👞</div>
+          <h3>Footwear</h3>
+          <p>Sneakers, sandals &amp; boots</p>
+          <span class="cat-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURED PRODUCTS ========== -->
+  <section class="featured section" id="featured">
+    <div class="container">
+      <div class="section-top fade-up">
+        <div>
+          <div class="section-label">Handpicked For You</div>
+          <h2 class="section-title">Featured Products</h2>
+        </div>
+        <a href="shop.html" class="btn btn-ghost">View All</a>
+      </div>
+
+      <div class="products-grid fade-up delay-1">
+
+        <!-- Product Card 1 -->
+        <div class="product-card" data-id="1">
+          <div class="product-img">
+            <div class="product-img-placeholder">👕</div>
+            <div class="product-badge">New</div>
+            <div class="product-actions">
+              <button class="action-btn wishlist-btn" title="Wishlist">♡</button>
+              <a href="product.html?id=1" class="action-btn view-btn" title="Quick View">👁</a>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Clothing</p>
+            <h3 class="product-name">Classic Oversized Hoodie</h3>
+            <div class="product-price-row">
+              <span class="product-price">₦8,000</span>
+              <span class="product-old-price">₦12,000</span>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart(1, 'Classic Oversized Hoodie', 8000)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Card 2 -->
+        <div class="product-card" data-id="2">
+          <div class="product-img">
+            <div class="product-img-placeholder">📱</div>
+            <div class="product-badge sale">Sale</div>
+            <div class="product-actions">
+              <button class="action-btn wishlist-btn" title="Wishlist">♡</button>
+              <a href="product.html?id=2" class="action-btn view-btn" title="Quick View">👁</a>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Gadgets</p>
+            <h3 class="product-name">Wireless Earbuds Pro</h3>
+            <div class="product-price-row">
+              <span class="product-price">₦15,000</span>
+              <span class="product-old-price">₦22,000</span>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart(2, 'Wireless Earbuds Pro', 15000)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Card 3 -->
+        <div class="product-card" data-id="3">
+          <div class="product-img">
+            <div class="product-img-placeholder">👟</div>
+            <div class="product-actions">
+              <button class="action-btn wishlist-btn" title="Wishlist">♡</button>
+              <a href="product.html?id=3" class="action-btn view-btn" title="Quick View">👁</a>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Footwear</p>
+            <h3 class="product-name">Urban Sneakers</h3>
+            <div class="product-price-row">
+              <span class="product-price">₦12,500</span>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart(3, 'Urban Sneakers', 12500)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Card 4 -->
+        <div class="product-card" data-id="4">
+          <div class="product-img">
+            <div class="product-img-placeholder">👜</div>
+            <div class="product-badge">Hot</div>
+            <div class="product-actions">
+              <button class="action-btn wishlist-btn" title="Wishlist">♡</button>
+              <a href="product.html?id=4" class="action-btn view-btn" title="Quick View">👁</a>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">Accessories</p>
+            <h3 class="product-name">Leather Crossbody Bag</h3>
+            <div class="product-price-row">
+              <span class="product-price">₦9,500</span>
+              <span class="product-old-price">₦14,000</span>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart(4, 'Leather Crossbody Bag', 9500)">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROMO BANNER ========== -->
+  <section class="promo-banner section">
+    <div class="container">
+      <div class="promo-inner fade-up">
+        <div class="promo-text">
+          <p class="promo-tag">Limited Time Offer</p>
+          <h2>Get 20% Off Your<br /><span>First Order</span></h2>
+          <p class="promo-sub">Use code <strong>WELCOME20</strong> at checkout. New customers only.</p>
+          <a href="shop.html" class="btn btn-primary">Claim Offer</a>
+        </div>
+        <div class="promo-visual">
+          <div class="promo-circle">
+            <span class="promo-percent">20%</span>
+            <span class="promo-off">OFF</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== WHY SHOPLITE ========== -->
+  <section class="why section">
+    <div class="container">
+      <div class="section-label fade-up">Why Choose Us</div>
+      <h2 class="section-title fade-up">The ShopLite Difference</h2>
+      <div class="why-grid fade-up delay-1">
+
+        <div class="why-card">
+          <div class="why-icon">🚚</div>
+          <h3>Fast Delivery</h3>
+          <p>Get your orders delivered quickly anywhere in Nigeria. Free shipping on orders over ₦10,000.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">✅</div>
+          <h3>100% Authentic</h3>
+          <p>Every product on ShopLite is verified and authentic. No knockoffs. No compromises.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🔄</div>
+          <h3>Easy Returns</h3>
+          <p>Not satisfied? Return within 7 days for a full refund. No questions asked.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🔒</div>
+          <h3>Secure Payments</h3>
+          <p>Your payment information is always protected. Shop with complete peace of mind.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">💬</div>
+          <h3>24/7 Support</h3>
+          <p>Have a question? Our support team is always available to help you out.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">🏷️</div>
+          <h3>Best Prices</h3>
+          <p>We source directly so you get the best prices without sacrificing quality.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NEWSLETTER ========== -->
+  <section class="newsletter section">
+    <div class="container">
+      <div class="newsletter-inner fade-up">
+        <div class="newsletter-text">
+          <h2>Stay In The Loop</h2>
+          <p>Subscribe for new arrivals, exclusive deals, and style tips delivered to your inbox.</p>
+        </div>
+        <div class="newsletter-form">
+          <input type="email" id="newsletterEmail" placeholder="Enter your email address" />
+          <button onclick="subscribeNewsletter()">Subscribe</button>
+        </div>
+        <p class="newsletter-note" id="newsletterMsg"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+          <p>Your one-stop lifestyle store for clothing, accessories and gadgets. Shop smart, live better.</p>
+          <div class="footer-socials">
+            <a href="#" title="Instagram">📸</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="WhatsApp">💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?category=clothing">Clothing</a></li>
+            <li><a href="shop.html?category=accessories">Accessories</a></li>
+            <li><a href="shop.html?category=gadgets">Gadgets</a></li>
+            <li><a href="shop.html?category=footwear">Footwear</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="login.html?mode=signup">Sign Up</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+            <li><a href="cart.html">My Cart</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 ShopLite. All rights reserved.</p>
+        <p>Built by <a href="../index.html">Abiodun Samuel</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== TOAST NOTIFICATION ========== -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/animations.js"></script>
+
+</body>
+</html>

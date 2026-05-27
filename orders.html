@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="My Orders — ShopLite" />
+  <title>My Orders | ShopLite</title>
+  <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <style>
+    .orders-page {
+      padding: 120px 0 80px;
+      min-height: 100vh;
+    }
+
+    .orders-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .orders-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+    }
+
+    .orders-sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .logout-btn {
+      padding: 10px 20px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .logout-btn:hover {
+      border-color: #ff4747;
+      color: #ff4747;
+    }
+
+    /* User greeting */
+    .user-greeting {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .user-avatar {
+      width: 52px;
+      height: 52px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #0a0a0f;
+      flex-shrink: 0;
+    }
+
+    .user-info strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .user-info span {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Orders list */
+    .orders-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .order-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .order-card:hover {
+      border-color: rgba(232,255,71,0.15);
+    }
+
+    .order-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      gap: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .order-card-header:hover {
+      background: rgba(255,255,255,0.02);
+    }
+
+    .order-id {
+      font-family: monospace;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+    }
+
+    .order-date {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .order-header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .order-total-label {
+      text-align: right;
+    }
+
+    .order-total-label span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 2px;
+    }
+
+    .order-total-label strong {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .order-status {
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    .status-processing {
+      background: rgba(124,106,255,0.1);
+      border: 1px solid rgba(124,106,255,0.2);
+      color: #a89dff;
+    }
+
+    .status-shipped {
+      background: rgba(232,255,71,0.1);
+      border: 1px solid rgba(232,255,71,0.2);
+      color: var(--accent);
+    }
+
+    .status-delivered {
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.2);
+      color: var(--accent-green);
+    }
+
+    .status-cancelled {
+      background: rgba(255,71,71,0.1);
+      border: 1px solid rgba(255,71,71,0.2);
+      color: #ff4747;
+    }
+
+    .order-toggle-icon {
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .order-toggle-icon.open {
+      transform: rotate(180deg);
+    }
+
+    /* Order body */
+    .order-card-body {
+      display: none;
+      padding: 20px 24px;
+    }
+
+    .order-card-body.open {
+      display: block;
+    }
+
+    .order-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .order-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px;
+      background: var(--bg-3);
+      border-radius: var(--radius-sm);
+    }
+
+    .order-item-emoji {
+      width: 44px;
+      height: 44px;
+      background: var(--bg-2);
+      border-radius: var(--radius-xs);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .order-item-info {
+      flex: 1;
+    }
+
+    .order-item-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .order-item-qty {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+    }
+
+    .order-item-price {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Order meta */
+    .order-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .order-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .order-meta-item span:first-child {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .order-meta-item span:last-child {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* Empty orders */
+    .orders-empty {
+      text-align: center;
+      padding: 80px 20px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+    }
+
+    .orders-empty-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    .orders-empty h3 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .orders-empty p {
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .orders-page {
+        padding: 100px 0 60px;
+      }
+
+      .order-card-header {
+        padding: 16px;
+      }
+
+      .order-card-body {
+        padding: 16px;
+      }
+
+      .order-meta {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .order-header-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .order-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .user-greeting {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar scrolled" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="login.html">Account</a></li>
+        <li><a href="cart.html" class="nav-cart">
+          Cart <span class="cart-count" id="cartCount">0</span>
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ORDERS PAGE -->
+  <main class="orders-page">
+    <div class="container">
+
+      <div class="orders-header fade-up">
+        <div>
+          <div class="section-label">My Account</div>
+          <h1 class="orders-title">My Orders</h1>
+          <p class="orders-sub">Track and manage all your ShopLite orders.</p>
+        </div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
+
+      <!-- User Greeting -->
+      <div class="user-greeting fade-up" id="userGreeting"></div>
+
+      <!-- Orders List -->
+      <div class="orders-list fade-up delay-1" id="ordersList"></div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo">Shop<span>Lite</span></a>
+          <p>Your one-stop lifestyle store for clothing, accessories and gadgets.</p>
+          <div class="footer-socials">
+            <a href="#" title="Instagram">📸</a>
+            <a href="#" title="Twitter">🐦</a>
+            <a href="#" title="WhatsApp">💬</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="shop.html?category=clothing">Clothing</a></li>
+            <li><a href="shop.html?category=accessories">Accessories</a></li>
+            <li><a href="shop.html?category=gadgets">Gadgets</a></li>
+            <li><a href="shop.html?category=footwear">Footwear</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Account</h4>
+          <ul>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="login.html?mode=signup">Sign Up</a></li>
+            <li><a href="orders.html">My Orders</a></li>
+            <li><a href="cart.html">My Cart</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Help</h4>
+          <ul>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Shipping Info</a></li>
+            <li><a href="#">Returns Policy</a></li>
+            <li><a href="#">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 ShopLite. All rights reserved.</p>
+        <p>Built by <a href="../index.html">Abiodun Samuel</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/main.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    function renderOrders() {
+      protectPage();
+
+      const user = getCurrentUser();
+      const greetingEl = document.getElementById('userGreeting');
+      const listEl = document.getElementById('ordersList');
+
+      if (user && greetingEl) {
+        const initials = user.firstName[0] + user.lastName[0];
+        greetingEl.innerHTML = `
+          <div class="user-avatar">${initials.toUpperCase()}</div>
+          <div class="user-info">
+            <strong>${user.firstName} ${user.lastName}</strong>
+            <span>${user.email}</span>
+          </div>
+        `;
+      }
+
+      const orders = JSON.parse(localStorage.getItem('shoplite_orders')) || [];
+
+      if (orders.length === 0) {
+        listEl.innerHTML = `
+          <div class="orders-empty">
+            <div class="orders-empty-icon">📦</div>
+            <h3>No orders yet</h3>
+            <p>You haven't placed any orders. Start shopping now!</p>
+            <a href="shop.html" class="btn btn-primary">Browse Products</a>
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = orders.map((order, index) => {
+        const statusClass = {
+          'Processing': 'status-processing',
+          'Shipped': 'status-shipped',
+          'Delivered': 'status-delivered',
+          'Cancelled': 'status-cancelled'
+        }[order.status] || 'status-processing';
+
+        const itemsHTML = order.items.map(item => `
+          <div class="order-item">
+            <div class="order-item-emoji">🛍️</div>
+            <div class="order-item-info">
+              <p class="order-item-name">${item.name}</p>
+              <p class="order-item-qty">Qty: ${item.quantity}</p>
+            </div>
+            <span class="order-item-price">₦${(item.price * item.quantity).toLocaleString()}</span>
+          </div>
+        `).join('');
+
+        return `
+          <div class="order-card fade-up">
+            <div class="order-card-header" onclick="toggleOrder(${index})">
+              <div>
+                <p class="order-id">${order.id}</p>
+                <p class="order-date">${order.date}</p>
+              </div>
+              <div class="order-header-right">
+                <div class="order-total-label">
+                  <span>Total</span>
+                  <strong>₦${order.total.toLocaleString()}</strong>
+                </div>
+                <span class="order-status ${statusClass}">${order.status}</span>
+                <span class="order-toggle-icon" id="toggleIcon${index}">▼</span>
+              </div>
+            </div>
+            <div class="order-card-body" id="orderBody${index}">
+              <div class="order-items-list">${itemsHTML}</div>
+              <div class="order-meta">
+                <div class="order-meta-item">
+                  <span>Delivery To</span>
+                  <span>${order.customer.city}, ${order.customer.state}</span>
+                </div>
+                <div class="order-meta-item">
+                  <span>Items</span>
+                  <span>${order.items.reduce((s, i) => s + i.quantity, 0)} item(s)</span>
+                </div>
+                <div class="order-meta-item">
+                  <span>Shipping</span>
+                  <span>${order.shipping === 0 ? 'Free' : '₦' + order.shipping.toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      setTimeout(() => {
+        listEl.querySelectorAll('.fade-up').forEach(el => {
+          el.classList.add('visible');
+        });
+      }, 50);
+    }
+
+    function toggleOrder(index) {
+      const body = document.getElementById('orderBody' + index);
+      const icon = document.getElementById('toggleIcon' + index);
+      if (!body) return;
+      body.classList.toggle('open');
+      icon.classList.toggle('open');
+    }
+
+    window.addEventListener('load', () => {
+      renderOrders();
+    });
+  </script>
+
+</body>
+</html>

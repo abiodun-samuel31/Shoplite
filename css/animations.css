@@ -1,0 +1,275 @@
+/* ===========================
+   FADE UP ON SCROLL
+=========================== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
+   DELAY HELPERS
+=========================== */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+
+/* ===========================
+   NAVBAR ENTRANCE
+=========================== */
+.navbar {
+  animation: navDown 0.5s ease forwards;
+}
+
+@keyframes navDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================
+   HERO ENTRANCE
+=========================== */
+.hero-text.fade-up {
+  transition-delay: 0.1s;
+}
+
+.hero-visual.fade-up {
+  transition-delay: 0.3s;
+}
+
+/* ===========================
+   PRODUCT CARD HOVER GLOW
+=========================== */
+.product-card {
+  position: relative;
+}
+
+.product-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(232,255,71,0.1),
+    rgba(124,106,255,0.08)
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.product-card:hover::after {
+  opacity: 1;
+}
+
+.product-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   CATEGORY CARD HOVER
+=========================== */
+.category-card {
+  transition: transform 0.3s ease,
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+}
+
+/* ===========================
+   WHY CARD HOVER
+=========================== */
+.why-card {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.why-card:hover {
+  transform: translateY(-3px);
+}
+
+/* ===========================
+   ADD TO CART BUTTON
+=========================== */
+.add-to-cart-btn {
+  transition: background 0.25s ease,
+              color 0.25s ease,
+              border-color 0.25s ease,
+              transform 0.2s ease;
+}
+
+.add-to-cart-btn:active {
+  transform: scale(0.96);
+}
+
+/* ===========================
+   CART COUNT POP
+=========================== */
+@keyframes cartPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+.cart-count.pop {
+  animation: cartPop 0.35s ease forwards;
+}
+
+/* ===========================
+   HERO CARD STACK FLOAT
+=========================== */
+.card-front {
+  animation: floatCard 5s ease-in-out infinite;
+}
+
+.card-back {
+  animation: floatCardBack 5s ease-in-out infinite 0.5s;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50%       { transform: rotate(-2deg) translateY(-10px); }
+}
+
+@keyframes floatCardBack {
+  0%, 100% { transform: rotate(6deg) translateY(0); }
+  50%       { transform: rotate(6deg) translateY(-6px); }
+}
+
+/* ===========================
+   PROMO CIRCLE PULSE
+=========================== */
+.promo-circle {
+  animation: floatCircle 4s ease-in-out infinite;
+}
+
+@keyframes floatCircle {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%       { transform: translateY(-12px) rotate(3deg); }
+}
+
+/* ===========================
+   BUTTON PRESS
+=========================== */
+.btn:active {
+  transform: scale(0.97);
+}
+
+/* ===========================
+   TOAST SLIDE UP
+=========================== */
+.toast {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===========================
+   FOOTER LINK UNDERLINE
+=========================== */
+.footer-col ul li a {
+  position: relative;
+  display: inline-block;
+}
+
+.footer-col ul li a::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.footer-col ul li a:hover::after {
+  width: 100%;
+}
+
+/* ===========================
+   NAV ACTIVE UNDERLINE
+=========================== */
+.nav-links li a {
+  position: relative;
+}
+
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 14px;
+  right: 14px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.nav-links li a:hover::after,
+.nav-links li a.active::after {
+  transform: scaleX(1);
+}
+
+/* ===========================
+   NEWSLETTER INPUT FOCUS
+=========================== */
+.newsletter-form input {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.newsletter-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(232,255,71,0.08);
+}
+
+/* ===========================
+   SCROLL HINT BOUNCE
+=========================== */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+/* ===========================
+   MARQUEE PAUSE ON HOVER
+=========================== */
+.marquee-strip:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ===========================
+   REDUCED MOTION SAFETY
+=========================== */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .card-front,
+  .card-back,
+  .promo-circle {
+    animation: none;
+  }
+
+  .marquee-track {
+    animation-duration: 60s;
+  }
+}
